@@ -1,0 +1,28 @@
+{
+  "company-name": "itsf",
+  "project-name": "crm",
+  "network": [
+    {}
+  ],
+  "vm": [
+    {
+      "vm_name": "vm-test-1",
+      "vm_cpu": 2,
+      "vm_independent_disk": true,
+      "vm_independent_disks": [
+      {
+        "vm_disk_name": "itsf-crm-vm-test-1-disk-1",
+        "vm_disk_size": 20
+      }
+    ]
+    },
+    {}
+  ],
+  "vm-defaults": {
+    "vm_domain": "itsmartflex.internal",
+    "vm_cpu": 1,
+    "vm_ram": 1,
+    "vm_network_already_exist": true,
+    "network_nsxt_edgegateway": "ITSF_Lviv T1"
+  }
+}
