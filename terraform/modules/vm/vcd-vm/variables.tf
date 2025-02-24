@@ -14,12 +14,13 @@ variable "vm_dict" {
     vm_ram      = number
     vm_cpu      = number
     vm_template = string
-    vm_independent_disks = optional(list(object({
+    vm_independent_disks = map(object({
       vm_disk_size = number
-    })))
+    }))
     networks = list(object({
       name = string
       ip   = string
+      mac  = string
     }))
   })
 }
@@ -38,8 +39,4 @@ variable "company-name" {
 
 variable "catalog_name" {
   type = string
-}
-
-variable "org_dict" {
-  type = object({})
 }

@@ -1,2 +1,8 @@
 #Python venv
 venv/
+.vodafone/*
+bin/
+.terraform.lock.hcl
+.terraform/
+.git
+.idea

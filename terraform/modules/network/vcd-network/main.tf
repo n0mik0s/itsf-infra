@@ -58,3 +58,22 @@ resource "vcd_nsxt_network_dhcp" "network_dhcp" {
   }
 }
 
+resource "vcd_nsxt_network_dhcp_binding" "dhcp_binding" {
+  for_each = var.network_dict.dhcp_bindings
+
+  org = data.vcd_org.default.name
+
+  org_network_id = vcd_nsxt_network_dhcp.network_dhcp[0].id
+
+  name         = "${var.company-name}-${var.project-name}-${var.network_name}-${each.key}-DHCP-binding"
+  description  = "DHCP binding description"
+  binding_type = "IPV4"
+  ip_address   = each.value.ip
+  lease_time   = 3600
+  mac_address  = each.value.mac
+  dns_servers  = [var.network_dict.dns1, var.network_dict.dns2]
+
+  dhcp_v4_config {
+    gateway_ip_address = var.network_dict.gateway
+  }
+}

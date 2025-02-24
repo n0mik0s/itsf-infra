@@ -10,7 +10,7 @@ variable "org_vdc" {
 
 variable "edge_gateway_default" {
   type    = string
-  default = "ITSF_Lviv T1"
+  default = ""
 }
 
 variable "edge_cluster_default" {
@@ -38,6 +38,10 @@ variable "network_dict" {
     listener_ip_address = string
     dns1                = string
     dns2                = string
+    dhcp_bindings = map(object({
+      mac = string
+      ip  = string
+    }))
   })
 }
 

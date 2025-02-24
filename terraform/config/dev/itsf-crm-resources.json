@@ -1,28 +1,138 @@
 {
   "company-name": "itsf",
   "project-name": "crm",
-  "network": [
-    {}
-  ],
-  "vm": [
-    {
-      "vm_name": "vm-test-1",
-      "vm_cpu": 2,
-      "vm_independent_disk": true,
-      "vm_independent_disks": [
-      {
-        "vm_disk_name": "itsf-crm-vm-test-1-disk-1",
-        "vm_disk_size": 20
+  "network": {
+    "test1": {
+      "description": "Test1 network",
+      "isolated": true,
+      "prefix_length": 24,
+      "ip_pools": [
+        {
+          "start_address": "10.1.10.10",
+          "end_address": "10.1.10.20"
+        },
+        {
+          "start_address": "10.1.10.30",
+          "end_address": "10.1.10.40"
+        },
+        {
+          "start_address": "10.1.10.50",
+          "end_address": "10.1.10.100"
+        }
+      ],
+      "gateway": "10.1.10.1",
+      "guest_vlan_allowed": true,
+      "dhcp_enable": true,
+      "dhcp_pools": [
+        {
+          "start_address": "10.1.10.200",
+          "end_address": "10.1.10.220"
+        },
+        {
+          "start_address": "10.1.10.230",
+          "end_address": "10.1.10.240"
+        }
+      ],
+      "dhcp_mode": "NETWORK",
+      "listener_ip_address": "10.1.10.254",
+      "dns1": "10.1.1.4",
+      "dns2": "1.1.1.1",
+      "dhcp_bindings": {
+        "vm-test2-1": {
+          "mac": "cc:8f:2e:c6:0d:76",
+          "ip": "10.1.10.221"
+        }
       }
-    ]
     },
-    {}
-  ],
-  "vm-defaults": {
-    "vm_domain": "itsmartflex.internal",
-    "vm_cpu": 1,
-    "vm_ram": 1,
-    "vm_network_already_exist": true,
-    "network_nsxt_edgegateway": "ITSF_Lviv T1"
+    "test2": {
+      "description": "Test2 network",
+      "isolated": true,
+      "prefix_length": 24,
+      "ip_pools": [
+        {
+          "start_address": "10.1.11.10",
+          "end_address": "10.1.11.20"
+        },
+        {
+          "start_address": "10.1.11.30",
+          "end_address": "10.1.11.40"
+        },
+        {
+          "start_address": "10.1.11.50",
+          "end_address": "10.1.11.100"
+        }
+      ],
+      "gateway": "10.1.11.1",
+      "guest_vlan_allowed": true,
+      "dhcp_enable": true,
+      "dhcp_pools": [
+        {
+          "start_address": "10.1.11.200",
+          "end_address": "10.1.11.220"
+        },
+        {
+          "start_address": "10.1.11.230",
+          "end_address": "10.1.11.240"
+        }
+      ],
+      "dhcp_mode": "NETWORK",
+      "listener_ip_address": "10.1.11.254",
+      "dns1": "10.1.1.4",
+      "dns2": "1.1.1.1",
+      "dhcp_bindings": {
+        "vm-test2-2": {
+          "mac": "3e:7d:88:16:c9:74",
+          "ip": "10.1.11.221"
+        },
+        "vm-test1-1": {
+          "mac": "f3:8b:bc:21:5d:24",
+          "ip": "10.1.11.222"
+        }
+      }
+    }
+  },
+  "vm": {
+    "vm-test1": {
+      "description": "Test VM",
+      "vm_ram": 6144,
+      "vm_cpu": 4,
+      "vm_template": "itsf-tf-oel-8-10-template",
+      "vm_independent_disk": false,
+      "vm_independent_disks": {},
+      "networks": [
+        {
+          "name": "itsf-crm-test2-isolated-network",
+          "ip": "10.1.11.221",
+          "mac": "3e:7d:88:16:c9:74"
+        }
+      ]
+    },
+    "vm-test2": {
+      "description": "Test VM",
+      "vm_ram": 4096,
+      "vm_cpu": 2,
+      "vm_template": "itsf-tf-oel-8-10-template",
+      "vm_independent_disk": true,
+      "vm_independent_disks": {
+        "0": {
+          "vm_disk_size": 20480
+        },
+        "1": {
+          "vm_disk_size": 10240
+        }
+      },
+      "networks": [
+        {
+          "name": "itsf-crm-test1-isolated-network",
+          "ip": "10.1.10.221",
+          "mac": "cc:8f:2e:c6:0d:76"
+        },
+        {
+          "name": "itsf-crm-test2-isolated-network",
+          "ip": "10.1.11.222",
+          "mac": "f3:8b:bc:21:5d:24"
+        }
+      ]
+    }
   }
 }
